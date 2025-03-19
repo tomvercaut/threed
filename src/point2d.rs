@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
 pub struct Point2D {
@@ -102,6 +102,33 @@ impl MulAssign<f64> for Point2D {
     }
 }
 
+impl Div for Point2D {
+    type Output = Self;
+    fn div(self, rhs: Self) -> Self::Output {
+        Self::new(self.x / rhs.x, self.y / rhs.y)
+    }
+}
+
+impl DivAssign for Point2D {
+    fn div_assign(&mut self, rhs: Self) {
+        self.x /= rhs.x;
+        self.y /= rhs.y;
+    }
+}
+
+impl Div<f64> for Point2D {
+    type Output = Self;
+    fn div(self, rhs: f64) -> Self::Output {
+        Self::new(self.x / rhs, self.y / rhs)
+    }
+}
+
+impl DivAssign<f64> for Point2D {
+    fn div_assign(&mut self, rhs: f64) {
+        self.x /= rhs;
+        self.y /= rhs;
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -195,5 +222,35 @@ mod tests {
         let mut p = Point2D::new(2.0, 3.0);
         p *= 2.0;
         assert_eq!(p, Point2D::new(4.0, 6.0));
+    }
+
+    #[test]
+    fn test_point_div() {
+        let p1 = Point2D::new(6.0, 12.0);
+        let p2 = Point2D::new(2.0, 3.0);
+        let result = p1 / p2;
+        assert_eq!(result, Point2D::new(3.0, 4.0));
+    }
+
+    #[test]
+    fn test_point_div_scalar() {
+        let p = Point2D::new(4.0, 6.0);
+        let result = p / 2.0;
+        assert_eq!(result, Point2D::new(2.0, 3.0));
+    }
+
+    #[test]
+    fn test_point_div_assign() {
+        let mut p1 = Point2D::new(6.0, 12.0);
+        let p2 = Point2D::new(2.0, 3.0);
+        p1 /= p2;
+        assert_eq!(p1, Point2D::new(3.0, 4.0));
+    }
+
+    #[test]
+    fn test_point_div_assign_scalar() {
+        let mut p = Point2D::new(4.0, 6.0);
+        p /= 2.0;
+        assert_eq!(p, Point2D::new(2.0, 3.0));
     }
 }
