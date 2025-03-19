@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign};
+use std::ops::{Add, AddAssign, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
 pub struct Point2D {
@@ -46,6 +46,35 @@ impl AddAssign<f64> for Point2D {
     }
 }
 
+impl Sub for Point2D {
+    type Output = Self;
+    fn sub(self, rhs: Self) -> Self::Output {
+        Self::new(self.x - rhs.x, self.y - rhs.y)
+    }
+}
+
+impl SubAssign for Point2D {
+    fn sub_assign(&mut self, rhs: Self) {
+        self.x -= rhs.x;
+        self.y -= rhs.y;
+    }
+}
+
+impl Sub<f64> for Point2D {
+    type Output = Self;
+    fn sub(self, rhs: f64) -> Self::Output {
+        Self::new(self.x - rhs, self.y - rhs)
+    }
+}
+
+impl SubAssign<f64> for Point2D {
+    fn sub_assign(&mut self, rhs: f64) {
+        self.x -= rhs;
+        self.y -= rhs;
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -78,5 +107,35 @@ mod tests {
         let mut p = Point2D::new(1.0, 2.0);
         p += 2.0;
         assert_eq!(p, Point2D::new(3.0, 4.0));
+    }
+
+    #[test]
+    fn test_point_sub() {
+        let p1 = Point2D::new(4.0, 6.0);
+        let p2 = Point2D::new(1.0, 2.0);
+        let result = p1 - p2;
+        assert_eq!(result, Point2D::new(3.0, 4.0));
+    }
+
+    #[test]
+    fn test_point_sub_scalar() {
+        let p = Point2D::new(3.0, 4.0);
+        let result = p - 2.0;
+        assert_eq!(result, Point2D::new(1.0, 2.0));
+    }
+
+    #[test]
+    fn test_point_sub_assign() {
+        let mut p1 = Point2D::new(4.0, 6.0);
+        let p2 = Point2D::new(1.0, 2.0);
+        p1 -= p2;
+        assert_eq!(p1, Point2D::new(3.0, 4.0));
+    }
+
+    #[test]
+    fn test_point_sub_assign_scalar() {
+        let mut p = Point2D::new(3.0, 4.0);
+        p -= 2.0;
+        assert_eq!(p, Point2D::new(1.0, 2.0));
     }
 }
