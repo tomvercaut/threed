@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
 pub struct Point2D {
@@ -9,6 +9,21 @@ pub struct Point2D {
 impl Point2D {
     pub fn new(x: f64, y: f64) -> Self {
         Self { x, y }
+    }
+}
+
+impl Neg for Point2D {
+    type Output = Self;
+    fn neg(self) -> Self::Output {
+        Self::new(-self.x, -self.y)
+    }
+}
+
+impl Neg for &Point2D {
+    type Output = Point2D;
+
+    fn neg(self) -> Self::Output {
+        Self::Output::new(-self.x, -self.y)
     }
 }
 
@@ -133,6 +148,20 @@ impl DivAssign<f64> for Point2D {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_point_neg() {
+        let p = Point2D::new(1.0, 2.0);
+        let result = -p;
+        assert_eq!(result, Point2D::new(-1.0, -2.0));
+    }
+
+    #[test]
+    fn test_point_neg_ref() {
+        let p = Point2D::new(1.0, 2.0);
+        let result = -&p;
+        assert_eq!(result, Point2D::new(-1.0, -2.0));
+    }
 
     #[test]
     fn test_point_add() {
