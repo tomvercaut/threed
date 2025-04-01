@@ -11,6 +11,36 @@ impl Point3D {
     pub fn new(x: f64, y: f64, z: f64) -> Self {
         Self { x, y, z }
     }
+
+    #[inline]
+    fn x(&self) -> &f64 {
+        &self.x
+    }
+
+    #[inline]
+    fn y(&self) -> &f64 {
+        &self.y
+    }
+
+    #[inline]
+    fn z(&self) -> &f64 {
+        &self.z
+    }
+
+    #[inline]
+    fn x_mut(&mut self) -> &mut f64 {
+        &mut self.x
+    }
+
+    #[inline]
+    fn y_mut(&mut self) -> &mut f64 {
+        &mut self.y
+    }
+
+    #[inline]
+    fn z_mut(&mut self) -> &mut f64 {
+        &mut self.z
+    }
 }
 
 impl From<(f64, f64, f64)> for Point3D {
@@ -150,6 +180,25 @@ impl DivAssign<Point3D> for Point3D {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_point_getters() {
+        let p = Point3D::new(1.0, 2.0, 3.0);
+        assert_eq!(*p.x(), 1.0);
+        assert_eq!(*p.y(), 2.0);
+        assert_eq!(*p.z(), 3.0);
+    }
+
+    #[test]
+    fn test_point_mut_getters() {
+        let mut p = Point3D::new(1.0, 2.0, 3.0);
+        *p.x_mut() = 3.0;
+        *p.y_mut() = 4.0;
+        *p.z_mut() = 5.0;
+        assert_eq!(*p.x(), 3.0);
+        assert_eq!(*p.y(), 4.0);
+        assert_eq!(*p.z(), 5.0);
+    }
 
     #[test]
     fn test_add_scalar() {
