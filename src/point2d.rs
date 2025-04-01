@@ -10,6 +10,26 @@ impl Point2D {
     pub fn new(x: f64, y: f64) -> Self {
         Self { x, y }
     }
+
+    #[inline]
+    fn x(&self) -> &f64 {
+        &self.x
+    }
+
+    #[inline]
+    fn y(&self) -> &f64 {
+        &self.y
+    }
+
+    #[inline]
+    fn x_mut(&mut self) -> &mut f64 {
+        &mut self.x
+    }
+
+    #[inline]
+    fn y_mut(&mut self) -> &mut f64 {
+        &mut self.y
+    }
 }
 
 impl Neg for Point2D {
@@ -148,6 +168,22 @@ impl DivAssign<f64> for Point2D {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_point_getters() {
+        let p = Point2D::new(1.0, 2.0);
+        assert_eq!(*p.x(), 1.0);
+        assert_eq!(*p.y(), 2.0);
+    }
+
+    #[test]
+    fn test_point_mut_getters() {
+        let mut p = Point2D::new(1.0, 2.0);
+        *p.x_mut() = 3.0;
+        *p.y_mut() = 4.0;
+        assert_eq!(*p.x(), 3.0);
+        assert_eq!(*p.y(), 4.0);
+    }
 
     #[test]
     fn test_point_neg() {
