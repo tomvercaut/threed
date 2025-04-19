@@ -14,32 +14,32 @@ impl Point3D {
     }
 
     #[inline]
-    fn x(&self) -> &f64 {
+    pub fn x(&self) -> &f64 {
         &self.x
     }
 
     #[inline]
-    fn y(&self) -> &f64 {
+    pub fn y(&self) -> &f64 {
         &self.y
     }
 
     #[inline]
-    fn z(&self) -> &f64 {
+    pub fn z(&self) -> &f64 {
         &self.z
     }
 
     #[inline]
-    fn x_mut(&mut self) -> &mut f64 {
+    pub fn x_mut(&mut self) -> &mut f64 {
         &mut self.x
     }
 
     #[inline]
-    fn y_mut(&mut self) -> &mut f64 {
+    pub fn y_mut(&mut self) -> &mut f64 {
         &mut self.y
     }
 
     #[inline]
-    fn z_mut(&mut self) -> &mut f64 {
+    pub fn z_mut(&mut self) -> &mut f64 {
         &mut self.z
     }
 
