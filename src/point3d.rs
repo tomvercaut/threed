@@ -1,11 +1,18 @@
-use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 use crate::point2d::Point2D;
+use crate::traits::Abs;
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
 pub struct Point3D {
     x: f64,
     y: f64,
     z: f64,
+}
+
+impl Abs for Point3D {
+    fn abs(&self) -> Self {
+        Self::new(self.x.abs(), self.y.abs(), self.z.abs())
+    }
 }
 
 impl Point3D {
@@ -57,7 +64,7 @@ impl Point3D {
     pub fn yz(&self) -> Point2D {
         Point2D::new(self.y, self.z)
     }
-    
+
     #[inline]
     pub fn zy(&self) -> Point2D {
         Point2D::new(self.z, self.y)
@@ -66,8 +73,8 @@ impl Point3D {
     #[inline]
     pub fn xz(&self) -> Point2D {
         Point2D::new(self.x, self.z)
-    } 
-    
+    }
+
     #[inline]
     pub fn zx(&self) -> Point2D {
         Point2D::new(self.z, self.x)
@@ -211,8 +218,12 @@ impl DivAssign<Point3D> for Point3D {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
-    
+
+    #[test]
+    fn test_point_abs() {
+        let p = Point3D::new(-1.0, -2.0, -3.0);
+        assert_eq!(p.abs(), Point3D::new(1.0, 2.0, 3.0));
+    }
 
     #[test]
     fn test_point_getters() {
@@ -257,7 +268,6 @@ mod tests {
         let p = Point3D::new(1.0, 2.0, 3.0);
         assert_eq!(p.zx(), Point2D::new(3.0, 1.0));
     }
-
 
     #[test]
     fn test_point_mut_getters() {

@@ -1,3 +1,4 @@
+use crate::traits::Abs;
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
@@ -29,6 +30,15 @@ impl Point2D {
     #[inline]
     pub fn y_mut(&mut self) -> &mut f64 {
         &mut self.y
+    }
+}
+
+impl Abs for Point2D {
+    fn abs(&self) -> Self {
+        Self {
+            x: self.x.abs(),
+            y: self.y.abs(),
+        }
     }
 }
 
@@ -168,6 +178,13 @@ impl DivAssign<f64> for Point2D {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_point_abs() {
+        let p = Point2D::new(-1.0, -2.0);
+        let result = p.abs();
+        assert_eq!(result, Point2D::new(1.0, 2.0));
+    }
 
     #[test]
     fn test_point_getters() {
