@@ -1,4 +1,5 @@
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
+use crate::point2d::Point2D;
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
 pub struct Point3D {
@@ -40,6 +41,36 @@ impl Point3D {
     #[inline]
     fn z_mut(&mut self) -> &mut f64 {
         &mut self.z
+    }
+
+    #[inline]
+    pub fn xy(&self) -> Point2D {
+        Point2D::new(self.x, self.y)
+    }
+
+    #[inline]
+    pub fn yx(&self) -> Point2D {
+        Point2D::new(self.y, self.x)
+    }
+
+    #[inline]
+    pub fn yz(&self) -> Point2D {
+        Point2D::new(self.y, self.z)
+    }
+    
+    #[inline]
+    pub fn zy(&self) -> Point2D {
+        Point2D::new(self.z, self.y)
+    }
+
+    #[inline]
+    pub fn xz(&self) -> Point2D {
+        Point2D::new(self.x, self.z)
+    } 
+    
+    #[inline]
+    pub fn zx(&self) -> Point2D {
+        Point2D::new(self.z, self.x)
     }
 }
 
@@ -180,6 +211,8 @@ impl DivAssign<Point3D> for Point3D {
 #[cfg(test)]
 mod tests {
     use super::*;
+    
+    
 
     #[test]
     fn test_point_getters() {
@@ -188,6 +221,43 @@ mod tests {
         assert_eq!(*p.y(), 2.0);
         assert_eq!(*p.z(), 3.0);
     }
+
+    #[test]
+    fn test_xy_projection() {
+        let p = Point3D::new(1.0, 2.0, 3.0);
+        assert_eq!(p.xy(), Point2D::new(1.0, 2.0));
+    }
+
+    #[test]
+    fn test_yz_projection() {
+        let p = Point3D::new(1.0, 2.0, 3.0);
+        assert_eq!(p.yz(), Point2D::new(2.0, 3.0));
+    }
+
+    #[test]
+    fn test_xz_projection() {
+        let p = Point3D::new(1.0, 2.0, 3.0);
+        assert_eq!(p.xz(), Point2D::new(1.0, 3.0));
+    }
+
+    #[test]
+    fn test_yx_projection() {
+        let p = Point3D::new(1.0, 2.0, 3.0);
+        assert_eq!(p.yx(), Point2D::new(2.0, 1.0));
+    }
+
+    #[test]
+    fn test_zy_projection() {
+        let p = Point3D::new(1.0, 2.0, 3.0);
+        assert_eq!(p.zy(), Point2D::new(3.0, 2.0));
+    }
+
+    #[test]
+    fn test_zx_projection() {
+        let p = Point3D::new(1.0, 2.0, 3.0);
+        assert_eq!(p.zx(), Point2D::new(3.0, 1.0));
+    }
+
 
     #[test]
     fn test_point_mut_getters() {
