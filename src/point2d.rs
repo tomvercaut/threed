@@ -1,4 +1,4 @@
-use crate::traits::{Abs, Dot};
+use crate::traits::{Abs, Dot, Length};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
@@ -181,6 +181,13 @@ impl DivAssign<f64> for Point2D {
     }
 }
 
+impl Length for Point2D {
+    fn length(&self) -> f64 {
+        (self.x * self.x + self.y * self.y).sqrt()
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -348,5 +355,11 @@ mod tests {
         let p2 = Point2D::new(3.0, 4.0);
         let result = p1.dot(&p2);
         assert_eq!(result, 11.0); // 1.0 * 3.0 + 2.0 * 4.0 = 11.0
+    }
+
+    #[test]
+    fn test_point_length() {
+        let p = Point2D::new(3.0, 4.0);
+        assert_eq!(p.length(), 5.0);
     }
 }

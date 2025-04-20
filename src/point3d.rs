@@ -1,5 +1,5 @@
 use crate::point2d::Point2D;
-use crate::traits::{Abs, Dot};
+use crate::traits::{Abs, Dot, Length};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
@@ -18,6 +18,13 @@ impl Abs for Point3D {
 impl Dot for Point3D {
     fn dot(&self, other: &Self) -> f64 {
         self.x * other.x + self.y * other.y + self.z * other.z
+    }
+}
+
+
+impl Length for Point3D {
+    fn length(&self) -> f64 {
+        (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
     }
 }
 
@@ -403,5 +410,11 @@ mod tests {
         let p2 = Point3D::new(2.0, 3.0, 4.0);
         p1 /= p2;
         assert_eq!(p1, Point3D::new(1.0, 2.0, 3.0));
+    }
+
+    #[test]
+    fn test_length() {
+        let p = Point3D::new(3.0, 4.0, 12.0);
+        assert_eq!(p.length(), 13.0);
     }
 }

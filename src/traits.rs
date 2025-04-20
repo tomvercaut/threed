@@ -29,3 +29,17 @@ pub trait Dot {
     /// Returns the scalar dot product as an f64 value
     fn dot(&self, other: &Self) -> f64;
 }
+
+pub trait Length {
+    /// Calculates the length (magnitude) of a vector.
+    ///
+    /// For a vector, the length or magnitude is the square root of the sum
+    /// of squares of its components. For example:
+    /// * In 2D: length = √(x² + y²)
+    /// * In 3D: length = √(x² + y² + z²)
+    ///
+    /// # Returns
+    ///
+    /// Returns the length of the vector as an f64 value
+    fn length(&self) -> f64;
+}
