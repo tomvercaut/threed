@@ -1,5 +1,15 @@
 
 pub trait Abs {
+    /// Returns the absolute value of a number or vector.
+    ///
+    /// This method calculates the absolute value of the implementing type.
+    /// For vectors, it typically returns a new vector with the same direction
+    /// but with a positive magnitude (length).
+    ///
+    /// # Returns
+    ///
+    /// Returns a new instance of the implementing type representing
+    /// the absolute value of the original.
     fn abs(&self) -> Self;
 }
 
