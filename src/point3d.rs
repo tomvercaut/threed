@@ -1,5 +1,5 @@
 use crate::point2d::Point2D;
-use crate::traits::Abs;
+use crate::traits::{Abs, Dot};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
@@ -12,6 +12,12 @@ pub struct Point3D {
 impl Abs for Point3D {
     fn abs(&self) -> Self {
         Self::new(self.x.abs(), self.y.abs(), self.z.abs())
+    }
+}
+
+impl Dot for Point3D {
+    fn dot(&self, other: &Self) -> f64 {
+        self.x * other.x + self.y * other.y + self.z * other.z
     }
 }
 
@@ -218,6 +224,13 @@ impl DivAssign<Point3D> for Point3D {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_dot() {
+        let p1 = Point3D::new(1.0, 2.0, 3.0);
+        let p2 = Point3D::new(4.0, 5.0, 6.0);
+        assert_eq!(p1.dot(&p2), 32.0); // 1*4 + 2*5 + 3*6 = 32
+    }
 
     #[test]
     fn test_point_abs() {

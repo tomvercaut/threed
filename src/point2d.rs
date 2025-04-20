@@ -1,4 +1,4 @@
-use crate::traits::Abs;
+use crate::traits::{Abs, Dot};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
@@ -39,6 +39,12 @@ impl Abs for Point2D {
             x: self.x.abs(),
             y: self.y.abs(),
         }
+    }
+}
+
+impl Dot for Point2D {
+    fn dot(&self, other: &Self) -> f64 {
+        self.x * other.x + self.y * other.y
     }
 }
 
@@ -334,5 +340,13 @@ mod tests {
         let mut p = Point2D::new(4.0, 6.0);
         p /= 2.0;
         assert_eq!(p, Point2D::new(2.0, 3.0));
+    }
+
+    #[test]
+    fn test_point_dot() {
+        let p1 = Point2D::new(1.0, 2.0);
+        let p2 = Point2D::new(3.0, 4.0);
+        let result = p1.dot(&p2);
+        assert_eq!(result, 11.0); // 1.0 * 3.0 + 2.0 * 4.0 = 11.0
     }
 }
