@@ -21,7 +21,6 @@ impl Dot for Point3D {
     }
 }
 
-
 impl Length for Point3D {
     fn length(&self) -> f64 {
         (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
@@ -416,5 +415,34 @@ mod tests {
     fn test_length() {
         let p = Point3D::new(3.0, 4.0, 12.0);
         assert_eq!(p.length(), 13.0);
+    }
+}
+
+pub mod ops {
+    use super::*;
+    use crate::traits::Distance;
+
+    #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
+    pub struct Ops {}
+
+    impl Distance<Point3D> for Ops {
+        type DistanceResult = f64;
+
+        fn distance(a: Point3D, b: &Point3D) -> Self::DistanceResult {
+            ((b.x() - a.x()).powi(2) + (b.y() - a.y()).powi(2) + (b.z() - a.z()).powi(2)).sqrt()
+        }
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+        use crate::traits::Distance;
+
+        #[test]
+        fn test_distance() {
+            let p1 = Point3D::new(1.0, 1.0, 1.0);
+            let p2 = Point3D::new(4.0, 5.0, 13.0);
+            assert_eq!(Ops::distance(p1, &p2), 13.0);
+        }
     }
 }
