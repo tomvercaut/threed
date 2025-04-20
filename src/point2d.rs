@@ -365,17 +365,9 @@ mod tests {
 
 pub mod ops {
     use super::*;
-    use crate::traits::Distance;
 
-    #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
-    pub struct Ops {}
-
-    impl Distance<Point2D> for Ops {
-        type DistanceResult = f64;
-
-        fn distance(a: Point2D, b: &Point2D) -> Self::DistanceResult {
-            ((b.x() - a.x()).powi(2) + (b.y() - a.y()).powi(2)).sqrt()
-        }
+    pub fn distance(a: Point2D, b: &Point2D) -> f64 {
+        ((b.x() - a.x()).powi(2) + (b.y() - a.y()).powi(2)).sqrt()
     }
 
     #[cfg(test)]
@@ -386,7 +378,7 @@ pub mod ops {
         fn test_point_distance() {
             let p1 = Point2D::new(1.0, 1.0);
             let p2 = Point2D::new(4.0, 5.0);
-            assert_eq!(Ops::distance(p1, &p2), 5.0);
+            assert_eq!(distance(p1, &p2), 5.0);
         }
     }
 }

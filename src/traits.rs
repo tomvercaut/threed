@@ -43,9 +43,3 @@ pub trait Length {
     /// Returns the length of the vector as an f64 value
     fn length(&self) -> f64;
 }
-
-pub trait Distance<T> {
-    type DistanceResult;
-    
-    fn distance(a: T, b: &T) -> Self::DistanceResult;
-}
