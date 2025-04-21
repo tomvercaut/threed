@@ -413,6 +413,30 @@ mod tests {
 
 pub mod ops {
     use super::*;
+    
+    /// Calculates the dot product (scalar product) of two 3D points/vectors.
+    ///
+    /// The dot product is the sum of the products of the corresponding components
+    /// of the two vectors.
+    ///
+    /// # Arguments
+    ///
+    /// * `a` - The first point/vector that implements AsRef<Point3D>
+    /// * `b` - The second point/vector that implements AsRef<Point3D>
+    ///
+    /// # Returns
+    ///
+    /// The scalar value representing the dot product of the two vectors
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use threed::point3d::ops::dot;
+    /// use threed::point3d::Point3D;
+    /// let p1 = Point3D::new(1.0, 2.0, 3.0);
+    /// let p2 = Point3D::new(4.0, 5.0, 6.0);
+    /// assert_eq!(dot(p1, p2), 32.0); // 1*4 + 2*5 + 3*6 = 32
+    /// ```
     pub fn dot<P: AsRef<Point3D>>(a: P, b: P) -> f64 {
         let a = a.as_ref();
         let b = b.as_ref();

@@ -358,6 +358,25 @@ mod tests {
 pub mod ops {
     use super::*;
 
+    /// Calculates the dot product of two 2D vectors.
+    ///
+    /// The dot product is the sum of the products of the corresponding components
+    /// of the two vectors.
+    ///
+    /// # Arguments
+    /// * `a` - The first vector
+    /// * `b` - The second vector
+    ///
+    /// # Returns
+    /// The dot product of vectors `a` and `b`
+    ///
+    /// # Example
+    /// ```
+    /// use threed::point2d::{Point2D, ops::dot};
+    /// let v1 = Point2D::new(1.0, 2.0);
+    /// let v2 = Point2D::new(3.0, 4.0);
+    /// assert_eq!(dot(v1, v2), 11.0); // 1.0 * 3.0 + 2.0 * 4.0
+    /// ```
     pub fn dot<P: AsRef<Point2D>>(a: P, b: P) -> f64 {
         let a = a.as_ref();
         let b = b.as_ref();
@@ -386,13 +405,13 @@ pub mod ops {
     /// assert_eq!(cross(v1, v2), -2.0);
     /// assert_eq!(cross(v2, v1), 2.0);
     /// ```
-    /// 
+    ///
     pub fn cross<P: AsRef<Point2D>>(a: P, b: P) -> f64 {
         let a = a.as_ref();
         let b = b.as_ref();
         a.x * b.y - a.y * b.x
     }
-    
+
     /// Calculates the Euclidean distance between two points in 2D space.
     ///
     /// This function computes the straight-line distance between two points
