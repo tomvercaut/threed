@@ -9,18 +9,6 @@ pub struct Point3D {
     z: f64,
 }
 
-impl Abs for Point3D {
-    fn abs(&self) -> Self {
-        Self::new(self.x.abs(), self.y.abs(), self.z.abs())
-    }
-}
-
-impl Length for Point3D {
-    fn length(&self) -> f64 {
-        (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
-    }
-}
-
 impl Point3D {
     pub fn new(x: f64, y: f64, z: f64) -> Self {
         Self { x, y, z }
@@ -84,6 +72,18 @@ impl Point3D {
     #[inline]
     pub fn zx(&self) -> Point2D {
         Point2D::new(self.z, self.x)
+    }
+}
+
+impl Abs for Point3D {
+    fn abs(&self) -> Self {
+        Self::new(self.x.abs(), self.y.abs(), self.z.abs())
+    }
+}
+
+impl Length for Point3D {
+    fn length(&self) -> f64 {
+        (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
     }
 }
 
