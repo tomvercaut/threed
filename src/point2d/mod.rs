@@ -364,6 +364,35 @@ pub mod ops {
         a.x * b.x + a.y * b.y
     }
 
+    /// Calculates the cross product (z-component) of two 2D vectors.
+    ///
+    /// The cross product of two 2D vectors results in a scalar value representing
+    /// the signed area of the parallelogram formed by these vectors.
+    /// A positive result indicates a counter-clockwise orientation from vector a to b,
+    /// while a negative result indicates a clockwise orientation.
+    ///
+    /// # Arguments
+    /// * `a` - The first vector
+    /// * `b` - The second vector
+    ///
+    /// # Returns
+    /// The z-component of the cross product (a.x * b.y - a.y * b.x)
+    ///
+    /// # Example
+    /// ```
+    /// use threed::point2d::{Point2D, ops::cross};
+    /// let v1 = Point2D::new(1.0, 2.0);
+    /// let v2 = Point2D::new(3.0, 4.0);
+    /// assert_eq!(cross(v1, v2), -2.0);
+    /// assert_eq!(cross(v2, v1), 2.0);
+    /// ```
+    /// 
+    pub fn cross<P: AsRef<Point2D>>(a: P, b: P) -> f64 {
+        let a = a.as_ref();
+        let b = b.as_ref();
+        a.x * b.y - a.y * b.x
+    }
+
     pub fn distance(a: Point2D, b: &Point2D) -> f64 {
         ((b.x() - a.x()).powi(2) + (b.y() - a.y()).powi(2)).sqrt()
     }
@@ -385,6 +414,14 @@ pub mod ops {
             let p2 = Point2D::new(3.0, 4.0);
             let result = dot(p1, p2);
             assert_eq!(result, 11.0); // 1.0 * 3.0 + 2.0 * 4.0 = 11.0
+        }
+
+        #[test]
+        fn test_point_cross() {
+            let p1 = Point2D::new(1.0, 2.0);
+            let p2 = Point2D::new(3.0, 4.0);
+            let result = cross(p1, p2);
+            assert_eq!(result, -2.0); // 1.0 * 4.0 - 2.0 * 3.0 = -2.0
         }
     }
 }

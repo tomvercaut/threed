@@ -419,6 +419,40 @@ pub mod ops {
         a.x * b.x + a.y * b.y + a.z * b.z
     }
 
+    /// Calculates the cross product of two 3D points/vectors.
+    ///
+    /// The cross product is an operation on two vectors in three-dimensional space that
+    /// results in a vector that is perpendicular to both of the vectors.
+    ///
+    /// # Arguments
+    ///
+    /// * `a` - The first point/vector that implements AsRef<Point3D>
+    /// * `b` - The second point/vector that implements AsRef<Point3D>
+    ///
+    /// # Returns
+    ///
+    /// A new Point3D representing the cross product of the two input vectors
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use threed::point3d::ops::cross;
+    /// use threed::point3d::Point3D;
+    /// let p1 = Point3D::new(1.0, 2.0, 3.0);
+    /// let p2 = Point3D::new(4.0, 5.0, 6.0);
+    /// let cross_product = cross(p1, p2);
+    /// assert_eq!(cross_product, Point3D::new(-3.0, 6.0, -3.0));
+    /// ```
+    pub fn cross<P: AsRef<Point3D>>(a: P, b: P) -> Point3D {
+        let a = a.as_ref();
+        let b = b.as_ref();
+        Point3D::new(
+            a.y * b.z - a.z * b.y,
+            a.z * b.x - a.x * b.z,
+            a.x * b.y - a.y * b.x,
+        )
+    }
+
     pub fn distance(a: Point3D, b: &Point3D) -> f64 {
         ((b.x() - a.x()).powi(2) + (b.y() - a.y()).powi(2) + (b.z() - a.z()).powi(2)).sqrt()
     }
@@ -439,6 +473,12 @@ pub mod ops {
             let p1 = Point3D::new(1.0, 1.0, 1.0);
             let p2 = Point3D::new(4.0, 5.0, 13.0);
             assert_eq!(distance(p1, &p2), 13.0);
+        }
+        #[test]
+        fn test_cross() {
+            let p1 = Point3D::new(1.0, 2.0, 3.0);
+            let p2 = Point3D::new(4.0, 5.0, 6.0);
+            assert_eq!(cross(p1, p2), Point3D::new(-3.0, 6.0, -3.0));
         }
     }
 }
