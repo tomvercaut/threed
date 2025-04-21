@@ -26,3 +26,8 @@ pub trait Length {
     /// Returns the length of the vector as an f64 value
     fn length(&self) -> f64;
 }
+
+pub trait Norm {
+    fn norm(&self) -> Self;
+    fn norm_mut(&mut self);
+}

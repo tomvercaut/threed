@@ -1,4 +1,5 @@
-use crate::traits::{Abs, Length};
+use crate::eps::is_zero_f64;
+use crate::traits::{Abs, Length, Norm};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
@@ -187,6 +188,28 @@ impl Length for Point2D {
     }
 }
 
+impl Norm for Point2D {
+    fn norm(&self) -> Point2D {
+        let l = self.length();
+        if is_zero_f64(l) {
+            Point2D::new(0.0, 0.0)
+        } else {
+            Point2D::new(self.x / l, self.y / l)
+        }
+    }
+
+    fn norm_mut(&mut self) {
+        let l = self.length();
+        if is_zero_f64(l) {
+            self.x = 0.0;
+            self.y = 0.0;
+        } else {
+            self.x /= l;
+            self.y /= l;
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -352,6 +375,34 @@ mod tests {
     fn test_point_length() {
         let p = Point2D::new(3.0, 4.0);
         assert_eq!(p.length(), 5.0);
+    }
+
+    #[test]
+    fn test_point_norm() {
+        let p = Point2D::new(3.0, 4.0);
+        let result = p.norm();
+        assert_eq!(result, Point2D::new(0.6, 0.8));
+    }
+
+    #[test]
+    fn test_point_norm_mut() {
+        let mut p = Point2D::new(3.0, 4.0);
+        p.norm_mut();
+        assert_eq!(p, Point2D::new(0.6, 0.8));
+    }
+
+    #[test]
+    fn test_point_norm_zero() {
+        let p = Point2D::new(0.0, 0.0);
+        let result = p.norm();
+        assert_eq!(result, Point2D::new(0.0, 0.0));
+    }
+
+    #[test]
+    fn test_point_norm_mut_zero() {
+        let mut p = Point2D::new(0.0, 0.0);
+        p.norm_mut();
+        assert_eq!(p, Point2D::new(0.0, 0.0));
     }
 }
 

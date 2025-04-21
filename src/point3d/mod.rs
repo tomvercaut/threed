@@ -1,5 +1,6 @@
+use crate::eps::is_zero_f64;
 use crate::point2d::Point2D;
-use crate::traits::{Abs, Length};
+use crate::traits::{Abs, Length, Norm};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
@@ -84,6 +85,30 @@ impl Abs for Point3D {
 impl Length for Point3D {
     fn length(&self) -> f64 {
         (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
+    }
+}
+
+impl Norm for Point3D {
+    fn norm(&self) -> Self {
+        let l = self.length();
+        if is_zero_f64(l) {
+            Self::new(0.0, 0.0, 0.0)
+        } else {
+            Self::new(self.x / l, self.y / l, self.z / l)
+        }
+    }
+
+    fn norm_mut(&mut self) {
+        let l = self.length();
+        if is_zero_f64(l) {
+            self.x = 0.0;
+            self.y = 0.0;
+            self.z = 0.0;
+        } else {
+            self.x /= l;
+            self.y /= l;
+            self.z /= l;
+        }
     }
 }
 
@@ -409,11 +434,40 @@ mod tests {
         let p = Point3D::new(3.0, 4.0, 12.0);
         assert_eq!(p.length(), 13.0);
     }
+
+    #[test]
+    fn test_norm() {
+        let p = Point3D::new(3.0, 4.0, 12.0);
+        let normalized = p.norm();
+        assert_eq!(
+            normalized,
+            Point3D::new(3.0 / 13.0, 4.0 / 13.0, 12.0 / 13.0)
+        );
+        assert!((normalized.length() - 1.0).abs() < f64::EPSILON);
+    }
+
+    #[test]
+    fn test_norm_mut() {
+        let mut p = Point3D::new(3.0, 4.0, 12.0);
+        p.norm_mut();
+        assert_eq!(p, Point3D::new(3.0 / 13.0, 4.0 / 13.0, 12.0 / 13.0));
+        assert!((p.length() - 1.0).abs() < f64::EPSILON);
+    }
+
+    #[test]
+    fn test_norm_zero() {
+        let p = Point3D::new(0.0, 0.0, 0.0);
+        assert_eq!(p.norm(), Point3D::new(0.0, 0.0, 0.0));
+
+        let mut p2 = Point3D::new(0.0, 0.0, 0.0);
+        p2.norm_mut();
+        assert_eq!(p2, Point3D::new(0.0, 0.0, 0.0));
+    }
 }
 
 pub mod ops {
     use super::*;
-    
+
     /// Calculates the dot product (scalar product) of two 3D points/vectors.
     ///
     /// The dot product is the sum of the products of the corresponding components
@@ -477,7 +531,6 @@ pub mod ops {
         )
     }
 
-    
     /// Calculates the Euclidean distance between two 3D points.
     ///
     /// # Arguments
