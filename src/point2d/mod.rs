@@ -392,7 +392,26 @@ pub mod ops {
         let b = b.as_ref();
         a.x * b.y - a.y * b.x
     }
-
+    
+    /// Calculates the Euclidean distance between two points in 2D space.
+    ///
+    /// This function computes the straight-line distance between two points
+    /// using the Pythagorean theorem: sqrt((x₂-x₁)² + (y₂-y₁)²)
+    ///
+    /// # Arguments
+    /// * `a` - The first point that i2yyjmplements AsRef<Point3D>
+    /// * `b` - The second point that implements AsRef<Point3D>
+    ///
+    /// # Returns
+    /// The distance between points `a` and `b`
+    ///
+    /// # Example
+    /// ```
+    /// use threed::point2d::{Point2D, ops::distance};
+    /// let p1 = Point2D::new(1.0, 2.0);
+    /// let p2 = Point2D::new(4.0, 6.0);
+    /// assert_eq!(distance(p1, p2), 5.0); // Forms a 3-4-5 triangle
+    /// ```
     pub fn distance<P: AsRef<Point2D>>(a: P, b: P) -> f64 {
         let a = a.as_ref();
         let b = b.as_ref();

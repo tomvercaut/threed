@@ -453,6 +453,27 @@ pub mod ops {
         )
     }
 
+    
+    /// Calculates the Euclidean distance between two 3D points.
+    ///
+    /// # Arguments
+    ///
+    /// * `a` - The first point that implements AsRef<Point3D>
+    /// * `b` - The second point that implements AsRef<Point3D>
+    ///
+    /// # Returns
+    ///
+    /// The Euclidean distance between points `a` and `b`
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use threed::point3d::ops::distance;
+    /// use threed::point3d::Point3D;
+    /// let p1 = Point3D::new(1.0, 2.0, 3.0);
+    /// let p2 = Point3D::new(4.0, 6.0, 15.0);
+    /// assert_eq!(distance(p1, p2), 13.0);
+    /// ```
     pub fn distance<P: AsRef<Point3D>>(a: P, b: P) -> f64 {
         let a = a.as_ref();
         let b = b.as_ref();
