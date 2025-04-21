@@ -1,4 +1,4 @@
-use crate::traits::{Abs, Dot, Length};
+use crate::traits::{Abs, Length};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
@@ -33,18 +33,18 @@ impl Point2D {
     }
 }
 
+impl AsRef<Point2D> for Point2D {
+    fn as_ref(&self) -> &Point2D {
+        self
+    }
+}
+
 impl Abs for Point2D {
     fn abs(&self) -> Self {
         Self {
             x: self.x.abs(),
             y: self.y.abs(),
         }
-    }
-}
-
-impl Dot for Point2D {
-    fn dot(&self, other: &Self) -> f64 {
-        self.x * other.x + self.y * other.y
     }
 }
 
@@ -349,14 +349,6 @@ mod tests {
     }
 
     #[test]
-    fn test_point_dot() {
-        let p1 = Point2D::new(1.0, 2.0);
-        let p2 = Point2D::new(3.0, 4.0);
-        let result = p1.dot(&p2);
-        assert_eq!(result, 11.0); // 1.0 * 3.0 + 2.0 * 4.0 = 11.0
-    }
-
-    #[test]
     fn test_point_length() {
         let p = Point2D::new(3.0, 4.0);
         assert_eq!(p.length(), 5.0);
@@ -365,6 +357,12 @@ mod tests {
 
 pub mod ops {
     use super::*;
+
+    pub fn dot<P: AsRef<Point2D>>(a: P, b: P) -> f64 {
+        let a = a.as_ref();
+        let b = b.as_ref();
+        a.x * b.x + a.y * b.y
+    }
 
     pub fn distance(a: Point2D, b: &Point2D) -> f64 {
         ((b.x() - a.x()).powi(2) + (b.y() - a.y()).powi(2)).sqrt()
@@ -379,6 +377,14 @@ pub mod ops {
             let p1 = Point2D::new(1.0, 1.0);
             let p2 = Point2D::new(4.0, 5.0);
             assert_eq!(distance(p1, &p2), 5.0);
+        }
+
+        #[test]
+        fn test_point_dot() {
+            let p1 = Point2D::new(1.0, 2.0);
+            let p2 = Point2D::new(3.0, 4.0);
+            let result = dot(p1, p2);
+            assert_eq!(result, 11.0); // 1.0 * 3.0 + 2.0 * 4.0 = 11.0
         }
     }
 }

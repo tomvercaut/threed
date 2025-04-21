@@ -1,5 +1,5 @@
 use crate::point2d::Point2D;
-use crate::traits::{Abs, Dot, Length};
+use crate::traits::{Abs, Length};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
@@ -12,12 +12,6 @@ pub struct Point3D {
 impl Abs for Point3D {
     fn abs(&self) -> Self {
         Self::new(self.x.abs(), self.y.abs(), self.z.abs())
-    }
-}
-
-impl Dot for Point3D {
-    fn dot(&self, other: &Self) -> f64 {
-        self.x * other.x + self.y * other.y + self.z * other.z
     }
 }
 
@@ -90,6 +84,12 @@ impl Point3D {
     #[inline]
     pub fn zx(&self) -> Point2D {
         Point2D::new(self.z, self.x)
+    }
+}
+
+impl AsRef<Point3D> for Point3D {
+    fn as_ref(&self) -> &Point3D {
+        self
     }
 }
 
@@ -230,13 +230,6 @@ impl DivAssign<Point3D> for Point3D {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_dot() {
-        let p1 = Point3D::new(1.0, 2.0, 3.0);
-        let p2 = Point3D::new(4.0, 5.0, 6.0);
-        assert_eq!(p1.dot(&p2), 32.0); // 1*4 + 2*5 + 3*6 = 32
-    }
 
     #[test]
     fn test_point_abs() {
@@ -420,7 +413,12 @@ mod tests {
 
 pub mod ops {
     use super::*;
-    
+    pub fn dot<P: AsRef<Point3D>>(a: P, b: P) -> f64 {
+        let a = a.as_ref();
+        let b = b.as_ref();
+        a.x * b.x + a.y * b.y + a.z * b.z
+    }
+
     pub fn distance(a: Point3D, b: &Point3D) -> f64 {
         ((b.x() - a.x()).powi(2) + (b.y() - a.y()).powi(2) + (b.z() - a.z()).powi(2)).sqrt()
     }
@@ -428,6 +426,13 @@ pub mod ops {
     #[cfg(test)]
     mod tests {
         use super::*;
+
+        #[test]
+        fn test_dot() {
+            let p1 = Point3D::new(1.0, 2.0, 3.0);
+            let p2 = Point3D::new(4.0, 5.0, 6.0);
+            assert_eq!(dot(p1, p2), 32.0); // 1*4 + 2*5 + 3*6 = 32
+        }
 
         #[test]
         fn test_distance() {
