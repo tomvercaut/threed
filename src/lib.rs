@@ -1,6 +1,6 @@
 #![allow(unused)]
 
-pub mod point2d;
-pub mod point3d;
+pub mod twod;
+pub mod threed;
 mod traits;
 mod eps;
