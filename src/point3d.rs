@@ -1,5 +1,5 @@
 use crate::eps::is_zero_f64;
-use crate::twod::Point2D;
+use crate::point2d::Point2D;
 use crate::traits::{Abs, Length, Norm};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
@@ -475,8 +475,8 @@ pub mod ops {
     ///
     /// # Arguments
     ///
-    /// * `a` - The first twod/vector that implements AsRef<Point3D>
-    /// * `b` - The second twod/vector that implements AsRef<Point3D>
+    /// * `a` - The first point/vector that implements AsRef<Point3D>
+    /// * `b` - The second point/vector that implements AsRef<Point3D>
     ///
     /// # Returns
     ///
@@ -485,8 +485,8 @@ pub mod ops {
     /// # Examples
     ///
     /// ```
-    /// use threed::threed::ops::dot;
-    /// use threed::threed::Point3D;
+    /// use threed::point3d::ops::dot;
+    /// use threed::point3d::Point3D;
     /// let p1 = Point3D::new(1.0, 2.0, 3.0);
     /// let p2 = Point3D::new(4.0, 5.0, 6.0);
     /// assert_eq!(dot(p1, p2), 32.0); // 1*4 + 2*5 + 3*6 = 32
@@ -504,8 +504,8 @@ pub mod ops {
     ///
     /// # Arguments
     ///
-    /// * `a` - The first twod/vector that implements AsRef<Point3D>
-    /// * `b` - The second twod/vector that implements AsRef<Point3D>
+    /// * `a` - The first point/vector that implements AsRef<Point3D>
+    /// * `b` - The second point/vector that implements AsRef<Point3D>
     ///
     /// # Returns
     ///
@@ -514,8 +514,8 @@ pub mod ops {
     /// # Examples
     ///
     /// ```
-    /// use threed::threed::ops::cross;
-    /// use threed::threed::Point3D;
+    /// use threed::point3d::ops::cross;
+    /// use threed::point3d::Point3D;
     /// let p1 = Point3D::new(1.0, 2.0, 3.0);
     /// let p2 = Point3D::new(4.0, 5.0, 6.0);
     /// let cross_product = cross(p1, p2);
@@ -535,8 +535,8 @@ pub mod ops {
     ///
     /// # Arguments
     ///
-    /// * `a` - The first twod that implements AsRef<Point3D>
-    /// * `b` - The second twod that implements AsRef<Point3D>
+    /// * `a` - The first point that implements AsRef<Point3D>
+    /// * `b` - The second point that implements AsRef<Point3D>
     ///
     /// # Returns
     ///
@@ -545,8 +545,8 @@ pub mod ops {
     /// # Examples
     ///
     /// ```
-    /// use threed::threed::ops::distance;
-    /// use threed::threed::Point3D;
+    /// use threed::point3d::ops::distance;
+    /// use threed::point3d::Point3D;
     /// let p1 = Point3D::new(1.0, 2.0, 3.0);
     /// let p2 = Point3D::new(4.0, 6.0, 15.0);
     /// assert_eq!(distance(p1, p2), 13.0);

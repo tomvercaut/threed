@@ -423,7 +423,7 @@ pub mod ops {
     ///
     /// # Example
     /// ```
-    /// use threed::twod::{Point2D, ops::dot};
+    /// use threed::point2d::{Point2D, ops::dot};
     /// let v1 = Point2D::new(1.0, 2.0);
     /// let v2 = Point2D::new(3.0, 4.0);
     /// assert_eq!(dot(v1, v2), 11.0); // 1.0 * 3.0 + 2.0 * 4.0
@@ -450,7 +450,7 @@ pub mod ops {
     ///
     /// # Example
     /// ```
-    /// use threed::twod::{Point2D, ops::cross};
+    /// use threed::point2d::{Point2D, ops::cross};
     /// let v1 = Point2D::new(1.0, 2.0);
     /// let v2 = Point2D::new(3.0, 4.0);
     /// assert_eq!(cross(v1, v2), -2.0);
@@ -477,7 +477,7 @@ pub mod ops {
     ///
     /// # Example
     /// ```
-    /// use threed::twod::{Point2D, ops::distance};
+    /// use threed::point2d::{Point2D, ops::distance};
     /// let p1 = Point2D::new(1.0, 2.0);
     /// let p2 = Point2D::new(4.0, 6.0);
     /// assert_eq!(distance(p1, p2), 5.0); // Forms a 3-4-5 triangle
